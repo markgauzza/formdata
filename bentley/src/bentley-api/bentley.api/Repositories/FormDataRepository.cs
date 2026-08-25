@@ -1,18 +1,20 @@
 ﻿using bentley.api.Data;
 using bentley.api.Models;
 using bentley.api.Repositories.Interfaces;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace bentley.api.Repositories
 {
     public class FormDataRepository(AppDbContext context) : IFormDataRepository
-    {
-        private readonly AppDbContext _context = context;
+    {       
 
         public async Task<FormResponse?> CreateFormRequestAsync(string subject, string? description, bool critical, DateTime? dueDate, int? priority, string createdBy)
         {
             var id = Guid.NewGuid();
-            _context.FormData.Add(new FormData
+            context.FormData.Add(new FormData
             {
                 Id = id,
                 Subject = subject,
@@ -24,9 +26,9 @@ namespace bentley.api.Repositories
                 Critical = critical
             });
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-            var record = await _context.FindAsync<FormData>(id);
+            var record = await context.FindAsync<FormData>(id);
             if (record == null)
                 return null;
 
@@ -35,7 +37,7 @@ namespace bentley.api.Repositories
 
         public async Task<FormResponse?> GetFormRequestByIdAsync(Guid id)
         {
-            var result = await _context.FindAsync<FormData>(id);
+            var result = await context.FindAsync<FormData>(id);
             if (result == null)
                 return null;
 
@@ -44,7 +46,7 @@ namespace bentley.api.Repositories
 
         public async Task<FormResponse?> UpdateFormRequestAsync(Guid id, string subject, string description, bool critical, DateTime? dueDate, int? priority, string updatedBy)
         {
-            var record = await _context.FindAsync<FormData>(id);
+            var record = await context.FindAsync<FormData>(id);
             if (record == null)
                 return null;
             record.Subject = subject;
@@ -54,18 +56,48 @@ namespace bentley.api.Repositories
             record.Critical = critical;
             record.UpdatedAt = DateTime.UtcNow;
             record.UpdatedBy = updatedBy;
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return MapToCreateFormResponse(record);
         }
 
         public async Task<int?> DeleteFormRequestAsync(Guid id)
         {
-            var record = await _context.FindAsync<FormData>(id);
+            var record = await context.FindAsync<FormData>(id);
             if (record == null)
                 return null;
-            _context.FormData.Remove(record);
-            return await _context.SaveChangesAsync();
+            context.FormData.Remove(record);
+            return await context.SaveChangesAsync();
+        }
 
+        public async Task<FormDataList> GetFormDataListAsync(int page = 1, int pageSize = 20, string? subjectFilter = null)
+        {
+            var paramPage = new SqlParameter("@PageNumber", page);
+            var paramPageSize = new SqlParameter("@PageSize", pageSize);
+            var paramSubjectFilter = new SqlParameter("@SubjectFilter", SqlDbType.VarChar, 200)
+            {
+                Value = (object?)subjectFilter ?? DBNull.Value
+            };
+
+            var paramTotalCount = new SqlParameter
+            {
+                ParameterName = "@TotalRecords",
+                SqlDbType = SqlDbType.Int,
+                Direction = ParameterDirection.Output
+            };
+
+            var records = await context.FormData.FromSqlRaw("EXEC GetFormDataList @PageNumber, @PageSize, null, @TotalRecords OUTPUT"
+                , paramPage, paramPageSize, paramTotalCount)
+                .ToListAsync();
+
+            int totalCount = paramTotalCount.Value != DBNull.Value ? (int)paramTotalCount.Value : 0;
+
+            return new FormDataList
+            {
+                Results = records,
+                PageNumber = page,
+                PageSize = pageSize,
+                TotalRecords = totalCount
+            };
         }
 
         private static FormResponse MapToCreateFormResponse(FormData formData)
@@ -88,6 +120,7 @@ namespace bentley.api.Repositories
     public record CreateFormRequest(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime CreatedAt, string CreatedBy) : IFormValidatable;
     public record UpdateFormRequest(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime CreatedAt, DateTime? UpdatedAt, string UpdatedBy) : IFormValidatable;
     public record FormResponse(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime CreatedAt, DateTime? UpdatedAt, string CreatedBy, string UpdatedBy);
+    public record FormListQuery(int Page = 1, int PageSize = 20, string? SubjectFilter = null);
 
     public interface IFormValidatable
     {

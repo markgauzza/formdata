@@ -1,5 +1,4 @@
-﻿using bentley.api.Models.Request;
-using bentley.api.Repositories;
+﻿using bentley.api.Repositories;
 using bentley.api.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
@@ -66,7 +65,8 @@ namespace bentley.api.Controllers
         [HttpGet]
         public async Task<IActionResult> List([FromQuery] FormListQuery query)
         {
-            return Ok();
+            var result = await formDataRepository.GetFormDataListAsync(query.Page, query.PageSize, query.SubjectFilter);
+            return Ok(result);
         }
 
         [HttpPut("{id:guid}")]
