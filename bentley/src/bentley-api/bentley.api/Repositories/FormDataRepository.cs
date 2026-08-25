@@ -85,8 +85,8 @@ namespace bentley.api.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            var records = await context.FormData.FromSqlRaw("EXEC GetFormDataList @PageNumber, @PageSize, null, @TotalRecords OUTPUT"
-                , paramPage, paramPageSize, paramTotalCount)
+            var records = await context.FormData.FromSqlRaw("EXEC GetFormDataList @PageNumber, @PageSize, @SubjectFilter, @TotalRecords OUTPUT"
+                , paramPage, paramPageSize, paramSubjectFilter, paramTotalCount)
                 .ToListAsync();
 
             int totalCount = paramTotalCount.Value != DBNull.Value ? (int)paramTotalCount.Value : 0;
