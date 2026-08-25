@@ -1,20 +1,18 @@
 ﻿using bentley.api.Repositories;
 using bentley.api.Repositories.Interfaces;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace bentley.api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
 
     public class FormsController(IFormDataRepository formDataRepository, ILogger<FormsController> logger, IValidator<IFormValidatable> validator) : ControllerBase
     {
-        #region Private Members
-        
-        #endregion
-
-
         #region Public Methods
 
         [HttpPost]
@@ -48,6 +46,8 @@ namespace bentley.api.Controllers
         {
             try
             {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    ?? User.FindFirstValue("sub");
                 var result = await formDataRepository.GetFormRequestByIdAsync(id);
 
                 if (result == null)
