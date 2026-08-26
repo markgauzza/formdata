@@ -62,6 +62,7 @@ namespace bentley.api.Repositories
 
         public async Task<int?> DeleteFormRequestAsync(Guid id)
         {
+            /////// THIS IS SUPOSED TO UPDATE THE RECORD TO INACTIVE INSTEAD OF DELETING IT
             var record = await context.FindAsync<FormData>(id);
             if (record == null)
                 return null;
@@ -85,7 +86,7 @@ namespace bentley.api.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            var records = await context.FormData.FromSqlRaw("EXEC GetFormDataList @PageNumber, @PageSize, @SubjectFilter, @TotalRecords OUTPUT"
+            var records = await context.FormData.FromSqlRaw("EXEC spGetFormDataList @PageNumber, @PageSize, @SubjectFilter, @TotalRecords OUTPUT"
                 , paramPage, paramPageSize, paramSubjectFilter, paramTotalCount)
                 .ToListAsync();
 
@@ -117,8 +118,8 @@ namespace bentley.api.Repositories
         }
     }
 
-    public record CreateFormRequest(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime CreatedAt, string CreatedBy) : IFormValidatable;
-    public record UpdateFormRequest(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime CreatedAt, DateTime? UpdatedAt, string UpdatedBy) : IFormValidatable;
+    public record CreateFormRequest(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime CreatedAt) : IFormValidatable;
+    public record UpdateFormRequest(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime? UpdatedAt) : IFormValidatable;
     public record FormResponse(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime CreatedAt, DateTime? UpdatedAt, string CreatedBy, string UpdatedBy);
     public record FormListQuery(int Page = 1, int PageSize = 20, string? SubjectFilter = null);
 
