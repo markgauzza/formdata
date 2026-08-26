@@ -34,7 +34,7 @@ namespace bentley.api.Controllers
 
                 var formData = await formDataRepository.CreateFormRequestAsync(request.Subject,
                         request.Description, request.Critical ?? false,
-                        request.DueDate, request.Priority, User.GetUserName() ?? "Unknown");
+                        request.DueDate, request.Priority, User.GetUserId() ?? "Unknown");
 
                 return Ok(formData);
             }
@@ -105,7 +105,7 @@ namespace bentley.api.Controllers
 
                 var formData = await formDataRepository.UpdateFormRequestAsync(id, request.Subject, request.Description, 
                         request.Critical.HasValue ? request.Critical.Value : false, request.DueDate, request.Priority,
-                        User.GetUserName() ?? "Unknown");
+                        User.GetUserId() ?? "Unknown");
                 if (formData == null)
                     return NotFound();
 
