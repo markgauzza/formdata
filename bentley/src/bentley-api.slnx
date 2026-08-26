@@ -1,6 +1,6 @@
 <Solution>
   <Project Path="../test/bentley.api.tests/bentley.api.tests.csproj" Id="ee40369b-0a76-4cbd-9ddf-54ee4c7c1986" DisplayName="bentley.Api.Tests" />
-  <Project Path="bentley.api/bentley.api.csproj" />
+  <Project Path="bentley.api/bentley.api.csproj" DisplayName="bentley.Api" />
   <Project Path="bentley.DataAccess/bentley.DataAccess.csproj" Id="09d6aa51-2dac-42f1-82cc-bd58923e9554" />
   <Project Path="bentley.database/bentley.Database.sqlproj" Id="3bf1d96f-1c57-4f2d-8360-5b4b25da9d7b">
     <Build />
