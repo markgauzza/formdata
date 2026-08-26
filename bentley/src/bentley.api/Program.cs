@@ -39,18 +39,16 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(key),
-
-        // Optional but recommended
-        ClockSkew = TimeSpan.FromMinutes(1)   // tolerate small clock differences
+    
+        ClockSkew = TimeSpan.FromMinutes(1)   
     };
 
-    // Optional: customize events for better logging / error messages
+    
     options.Events = new JwtBearerEvents
     {
         OnAuthenticationFailed = context =>
-        {
-            options.IncludeErrorDetails = true;   // only for Development!
-            // Log the failure (do not expose internal details to client)
+        {           
+            
             var logger = context.HttpContext.RequestServices
                 .GetRequiredService<ILogger<Program>>();
             logger.LogWarning(context.Exception, "JWT authentication failed");
@@ -58,7 +56,7 @@ builder.Services.AddAuthentication(options =>
         },
         OnChallenge = context =>
         {
-            // Prevent the default challenge response so you can return a clean JSON body
+            
             context.HandleResponse();
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             context.Response.ContentType = "application/json";
@@ -68,7 +66,9 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddAuthorization();   // required for [Authorize]
+builder.Services.AddAuthorization();  
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -79,8 +79,9 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();   
+    app.UseSwaggerUI(); 
 }
-
 
 app.UseAuthentication();   
 app.UseAuthorization();
