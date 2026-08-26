@@ -2,15 +2,15 @@
 @jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaXNzIjoiaHR0cHM6Ly9mb3JtZGF0YS1hcGkuY29tIiwiYXVkIjoiaHR0cHM6Ly9mb3JtZGF0YS1hcGkuY29tIiwiaWF0IjoxNzg3Njk1NTAwLCJuYmYiOjE3ODc2OTU1MDAsImV4cCI6MTc4Nzc4MTkwMH0.zmZgYCnXFs_DQqBXGVUWWHGwdltOXyJcuiGVpQF80pE
 
 ### List forms (with filter)
-GET {{baseUrl}}/api/forms?subjectfilter=form
+GET {{baseUrl}}/api/v1/forms?subjectfilter=form
 Authorization: Bearer {{jwt}}
 
 ### List forms (no filter)
-GET {{baseUrl}}/api/forms
+GET {{baseUrl}}/api/v1/forms
 Authorization: Bearer {{jwt}}
 
 ### Get form by ID
-GET {{baseUrl}}/api/forms/d5337ace-6e79-4fb1-b16b-5f8fd799b70c
+GET {{baseUrl}}/api/v1/forms/d5337ace-6e79-4fb1-b16b-5f8fd799b70c
 Authorization: Bearer {{jwt}}
 
 ###

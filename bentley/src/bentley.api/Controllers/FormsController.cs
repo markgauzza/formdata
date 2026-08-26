@@ -1,4 +1,5 @@
-﻿using bentley.Api.Extensions;
+﻿using Asp.Versioning;
+using bentley.Api.Extensions;
 using bentley.Api.Security;
 using bentley.DataAccess.Repositories;
 using bentley.DataAccess.Repositories.Interfaces;
@@ -10,7 +11,8 @@ using System.Security.Claims;
 namespace bentley.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")] 
+    [Route("api/v{version:apiVersion}/[controller]")] 
     [Authorize]
 
     public class FormsController(IFormDataRepository formDataRepository, ILogger<FormsController> logger, IValidator<IFormValidatable> validator) : ControllerBase

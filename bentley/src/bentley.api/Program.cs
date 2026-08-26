@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using bentley.DataAccess;
 using bentley.DataAccess.Repositories;
 using bentley.DataAccess.Repositories.Interfaces;
@@ -72,6 +73,20 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddApiVersioning(options =>
+{    
+    options.AssumeDefaultVersionWhenUnspecified = true;
+ 
+    options.DefaultApiVersion = new ApiVersion(1, 0); 
+    options.ReportApiVersions = true;
+    
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new UrlSegmentApiVersionReader(),                                      
+        new HeaderApiVersionReader("X-Version"),                              
+        new QueryStringApiVersionReader("api-version")                        
+    );
+});
 
 var app = builder.Build();
 
