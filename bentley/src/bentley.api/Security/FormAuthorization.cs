@@ -1,5 +1,4 @@
-﻿using bentley.Api.Models;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace bentley.Api.Security
 {

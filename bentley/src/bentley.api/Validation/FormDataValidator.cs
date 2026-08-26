@@ -1,4 +1,4 @@
-﻿using bentley.Api.Repositories;
+﻿using bentley.DataAccess.Repositories;
 using FluentValidation;
 
 namespace bentley.Api.Validation

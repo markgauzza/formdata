@@ -1,7 +1,7 @@
 ﻿using bentley.Api.Controllers;
-using bentley.Api.Models;
-using bentley.Api.Repositories;
-using bentley.Api.Repositories.Interfaces;
+using bentley.DataAccess.Models;
+using bentley.DataAccess.Repositories;
+using bentley.DataAccess.Repositories.Interfaces;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;

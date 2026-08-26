@@ -1,6 +1,7 @@
-﻿using bentley.DataAccess.Data;
-using bentley.DataAccess.Models;
+﻿using bentley.DataAccess.Models;
 using bentley.DataAccess.Repositories.Interfaces;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace bentley.DataAccess.Repositories

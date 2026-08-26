@@ -1,10 +1,9 @@
-using bentley.Api.Data;
-using bentley.Api.Repositories;
-using bentley.Api.Repositories.Interfaces;
+using bentley.DataAccess;
+using bentley.DataAccess.Repositories;
+using bentley.DataAccess.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -13,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddValidatorsFromAssemblyContaining<IFormValidatable>();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

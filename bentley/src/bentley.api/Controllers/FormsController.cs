@@ -1,7 +1,7 @@
 ﻿using bentley.Api.Extensions;
-using bentley.Api.Repositories;
-using bentley.Api.Repositories.Interfaces;
 using bentley.Api.Security;
+using bentley.DataAccess.Repositories;
+using bentley.DataAccess.Repositories.Interfaces;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
