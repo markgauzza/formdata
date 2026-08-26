@@ -21,7 +21,8 @@ namespace bentley.DataAccess.Repositories
                 Priority = priority,
                 CreatedAt = DateTime.UtcNow,
                 CreatedBy = createdBy,
-                Critical = critical                
+                Critical = critical,
+                Active = true
             });
 
             await context.SaveChangesAsync();

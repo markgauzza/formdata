@@ -139,7 +139,11 @@ namespace bentley.Api.Controllers
                 }
                 
 
-                return Ok(string.Format("Record with ID {0} was deleted.", id));
+                return Ok(new 
+                {
+                    Id = id,
+                    Message = $"Form request with ID {id} was deleted successfully."
+                });
             }
             catch (Exception ex)
             {
