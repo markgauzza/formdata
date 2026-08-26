@@ -59,13 +59,13 @@ namespace bentley.DataAccess.Repositories
         }
 
         public async Task<int?> DeleteFormRequestAsync(Guid id)
-        {
-            /////// THIS IS SUPOSED TO UPDATE THE RECORD TO INACTIVE INSTEAD OF DELETING IT
+        {         
             var record = await context.FindAsync<FormData>(id);
-            if (record == null)
+            if (record == null || !record.Active)
                 return null;
-            context.FormData.Remove(record);
-            return await context.SaveChangesAsync();
+            record.Active = false;
+            await context.SaveChangesAsync();
+            return 1;
         }
 
         public async Task<FormDataList> GetFormDataListAsync(int page = 1, int pageSize = 20, string? subjectFilter = null)
@@ -84,8 +84,10 @@ namespace bentley.DataAccess.Repositories
                 Direction = ParameterDirection.Output
             };
 
-            var records = await context.FormData.FromSqlRaw("EXEC spGetFormDataList @PageNumber, @PageSize, @SubjectFilter, @TotalRecords OUTPUT"
-                , paramPage, paramPageSize, paramSubjectFilter, paramTotalCount)
+            var records = await context.Database
+                .SqlQueryRaw<FormData>(
+                    "EXEC spGetFormDataList @PageNumber, @PageSize, @SubjectFilter, @TotalRecords OUTPUT",
+                    paramPage, paramPageSize, paramSubjectFilter, paramTotalCount)
                 .ToListAsync();
 
             int totalCount = paramTotalCount.Value != DBNull.Value ? (int)paramTotalCount.Value : 0;

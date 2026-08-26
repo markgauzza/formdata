@@ -31,8 +31,10 @@ BEGIN
       ,[CreatedBy]
       ,[UpdatedAt]
       ,[UpdatedBy]
+      ,[Active]
     FROM [dbo].[FormData]
-        WHERE @SubjectFilter IS NULL OR Subject LIKE '%' + @SubjectFilter + '%'
+        WHERE Active = 1 
+        AND (@SubjectFilter IS NULL OR Subject LIKE '%' + @SubjectFilter + '%')
     ORDER BY 
         CreatedAt
         OFFSET @Offset ROWS

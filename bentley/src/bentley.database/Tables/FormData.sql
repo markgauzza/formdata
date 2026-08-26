@@ -9,6 +9,7 @@ CREATE TABLE [dbo].[FormData](
 	[CreatedBy] [nvarchar](50) NOT NULL,
 	[UpdatedAt] [datetime] NULL,
 	[UpdatedBy] [nvarchar](50) NULL,
+	[Active] [bit] NOT NULL,
  CONSTRAINT [PK_FormData] PRIMARY KEY CLUSTERED 
 (
 	[FormDataId] ASC
@@ -22,4 +23,6 @@ GO
 ALTER TABLE [dbo].[FormData] ADD  CONSTRAINT [DF_FormData_CreatedAt]  DEFAULT (getutcdate()) FOR [CreatedAt]
 GO
 
+ALTER TABLE [dbo].[FormData] ADD  CONSTRAINT [DF_FormData_Active]  DEFAULT ((1)) FOR [Active]
+GO
 
