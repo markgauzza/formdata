@@ -259,7 +259,7 @@ namespace bentley.Api.Tests.Controllers
 
             _repoMock
                  .Setup(r => r.DeleteFormRequestAsync(id))
-                 .ReturnsAsync(1);
+                 .ReturnsAsync(true);
 
             // Act
             var result = await _controller.Delete(id);

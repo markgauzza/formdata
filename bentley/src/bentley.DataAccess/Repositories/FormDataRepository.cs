@@ -58,14 +58,14 @@ namespace bentley.DataAccess.Repositories
             return MapToCreateFormResponse(record);
         }
 
-        public async Task<int?> DeleteFormRequestAsync(Guid id)
+        public async Task<bool?> DeleteFormRequestAsync(Guid id)
         {         
             var record = await context.FindAsync<FormData>(id);
-            if (record == null || !record.Active)
+            if (record == null)
                 return null;
             record.Active = false;
             await context.SaveChangesAsync();
-            return 1;
+            return true;
         }
 
         public async Task<FormDataList> GetFormDataListAsync(int page = 1, int pageSize = 20, string? subjectFilter = null)

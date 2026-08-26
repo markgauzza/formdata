@@ -127,10 +127,17 @@ namespace bentley.Api.Controllers
                     return Forbid();
 
                 var result = await formDataRepository.DeleteFormRequestAsync(id);
-                if (result == null)
+                if (!result.HasValue)
                     return NotFound();
 
-                return Ok(result);
+                if (!result.Value)
+                {
+                    logger.LogWarning("Record was not deleted successfully {id}.", id);
+                    return Problem(string.Format("Record with ID {0} was not deleted successfully.", id));
+                }
+                
+
+                return Ok(string.Format("Record with ID {0} was deleted.", id));
             }
             catch (Exception ex)
             {
