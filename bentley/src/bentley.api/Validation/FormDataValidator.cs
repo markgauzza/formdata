@@ -1,7 +1,7 @@
-﻿using bentley.api.Repositories;
+﻿using bentley.Api.Repositories;
 using FluentValidation;
 
-namespace bentley.api.Validation
+namespace bentley.Api.Validation
 {
     public class FormDataValidator : AbstractValidator<IFormValidatable>
     {

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-namespace bentley.Api.Models
+namespace bentley.DataAccess.Models
 {
     public class FormData
     {

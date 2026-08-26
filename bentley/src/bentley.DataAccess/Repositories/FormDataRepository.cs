@@ -1,12 +1,9 @@
-﻿using bentley.Api.Data;
-using bentley.Api.Models;
-using bentley.Api.Repositories.Interfaces;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using bentley.DataAccess.Data;
+using bentley.DataAccess.Models;
+using bentley.DataAccess.Repositories.Interfaces;
 using System.Data;
 
-namespace bentley.Api.Repositories
+namespace bentley.DataAccess.Repositories
 {
     public class FormDataRepository(AppDbContext context) : IFormDataRepository
     {       

@@ -1,13 +1,13 @@
-﻿using bentley.api.Extensions;
-using bentley.api.Repositories;
-using bentley.api.Repositories.Interfaces;
-using bentley.api.Security;
+﻿using bentley.Api.Extensions;
+using bentley.Api.Repositories;
+using bentley.Api.Repositories.Interfaces;
+using bentley.Api.Security;
 using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace bentley.api.Controllers
+namespace bentley.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

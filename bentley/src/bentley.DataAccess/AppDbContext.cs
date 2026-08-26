@@ -1,7 +1,7 @@
-﻿using bentley.Api.Models;
+﻿using bentley.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace bentley.Api.Data
+namespace bentley.DataAccess
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {

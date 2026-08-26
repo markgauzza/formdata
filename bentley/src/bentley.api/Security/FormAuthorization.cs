@@ -1,7 +1,7 @@
-﻿using bentley.api.Models;
+﻿using bentley.Api.Models;
 using System.Security.Claims;
 
-namespace bentley.api.Security
+namespace bentley.Api.Security
 {
     public static class FormAuthorization
     {

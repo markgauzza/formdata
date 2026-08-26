@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\bentley.api\bentley.api.csproj" />
+    <ProjectReference Include="..\..\src\bentley.api\bentley.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>

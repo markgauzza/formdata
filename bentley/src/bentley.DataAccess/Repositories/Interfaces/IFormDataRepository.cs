@@ -1,6 +1,6 @@
-﻿using bentley.Api.Models;
+﻿using bentley.DataAccess.Models;
 
-namespace bentley.Api.Repositories.Interfaces
+namespace bentley.DataAccess.Repositories.Interfaces
 {
     public interface IFormDataRepository
     {        

@@ -1,22 +1,18 @@
-﻿using bentley.api.Controllers;
-using bentley.api.Models;
-using bentley.api.Repositories;
-using bentley.api.Repositories.Interfaces;
-using bentley.api.Security;
+﻿using bentley.Api.Controllers;
+using bentley.Api.Models;
+using bentley.Api.Repositories;
+using bentley.Api.Repositories.Interfaces;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using Xunit;
 using ValidationResult = FluentValidation.Results.ValidationResult;
 
-namespace bentley.api.Tests.Controllers
+namespace bentley.Api.Tests.Controllers
 {
     public class FormsControllerTests
     {
@@ -59,14 +55,6 @@ namespace bentley.api.Tests.Controllers
             _controller.ControllerContext = new ControllerContext
             {
                 HttpContext = new DefaultHttpContext { User = principal }
-            };
-        }
-
-        private void SetupAnonymousUser()
-        {
-            _controller.ControllerContext = new ControllerContext
-            {
-                HttpContext = new DefaultHttpContext { User = new ClaimsPrincipal() }
             };
         }
 
@@ -205,7 +193,13 @@ namespace bentley.api.Tests.Controllers
         {
             // Arrange
             var id = Guid.NewGuid();
-            var request = new UpdateFormRequest(Guid.NewGuid(), "subhject", "description", null, null, null, DateTime.UtcNow); 
+            var request = new UpdateFormRequest(Guid.NewGuid(), "subhject", "description", null, null, null, DateTime.UtcNow);
+
+            var form = new FormResponse(id, "Existing", "description", null, null, null, DateTime.UtcNow, null, "mbg", "abc");
+            _repoMock
+                .Setup(r => r.GetFormRequestByIdAsync(id))
+                .ReturnsAsync(form);
+
 
             _validatorMock
                 .Setup(v => v.ValidateAsync(request, default))
@@ -215,7 +209,7 @@ namespace bentley.api.Tests.Controllers
             _repoMock
                 .Setup(r => r.UpdateFormRequestAsync(
                     id, request.Subject, request.Description,
-                    false, request.DueDate, request.Priority, "mbg"))
+                    false, request.DueDate, request.Priority, It.IsAny<string>()))
                 .ReturnsAsync(updatedForm);
 
             // Act
