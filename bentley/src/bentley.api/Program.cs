@@ -10,12 +10,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddTransient<IFormDataRepository, FormDataRepository>();
 
@@ -25,8 +22,6 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;    
-
-
 })
 .AddJwtBearer(options =>
 {
@@ -77,8 +72,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddApiVersioning(options =>
 {    
     options.AssumeDefaultVersionWhenUnspecified = true;
- 
-    options.DefaultApiVersion = new ApiVersion(1, 0); 
+
+    options.DefaultApiVersion = new ApiVersion(1, 0);
     options.ReportApiVersions = true;
     
     options.ApiVersionReader = ApiVersionReader.Combine(

@@ -153,9 +153,5 @@ namespace bentley.Api.Controllers
         }
 
         #endregion
-
-        #region Private Methods        
-
-        #endregion
     }
 }

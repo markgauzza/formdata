@@ -7,7 +7,8 @@ using System.Data;
 namespace bentley.DataAccess.Repositories
 {
     public class FormDataRepository(AppDbContext context) : IFormDataRepository
-    {       
+    {
+        #region Public Methods
 
         public async Task<FormResponse?> CreateFormRequestAsync(string subject, string? description, bool critical, DateTime? dueDate, int? priority, string createdBy)
         {
@@ -102,6 +103,10 @@ namespace bentley.DataAccess.Repositories
             };
         }
 
+        #endregion
+
+        #region Private Methods
+
         private static FormResponse MapToCreateFormResponse(FormData formData)
         {
             return new FormResponse(
@@ -117,16 +122,17 @@ namespace bentley.DataAccess.Repositories
                 UpdatedBy: formData.UpdatedBy
             );
         }
+
+        #endregion
     }
+
+    #region Public Records
 
     public record CreateFormRequest(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime CreatedAt) : IFormValidatable;
     public record UpdateFormRequest(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime? UpdatedAt) : IFormValidatable;
     public record FormResponse(Guid Id, string Subject, string Description, DateTime? DueDate, int? Priority, bool? Critical, DateTime CreatedAt, DateTime? UpdatedAt, string CreatedBy, string UpdatedBy);
     public record FormListQuery(int Page = 1, int PageSize = 20, string? SubjectFilter = null);
 
-    public interface IFormValidatable
-    {
-        public string Subject { get; }
-        public int? Priority { get; }
-    }
+    #endregion
 }
+
