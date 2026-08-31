@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using bentley.Api.Security;
 using bentley.DataAccess;
 using bentley.DataAccess.Repositories;
 using bentley.DataAccess.Repositories.Interfaces;
@@ -10,8 +11,21 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.SetIsOriginAllowed(origin =>
+                origin.StartsWith("http://localhost:"))
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+builder.Services.AddSingleton<JwtTokenGenerator>();
 
 builder.Services.AddOpenApi();
 builder.Services.AddTransient<IFormDataRepository, FormDataRepository>();
@@ -43,8 +57,9 @@ builder.Services.AddAuthentication(options =>
     options.Events = new JwtBearerEvents
     {
         OnAuthenticationFailed = context =>
-        {           
-            
+        {
+            Console.WriteLine("JWT FAILED: " + context.Exception.Message);
+
             var logger = context.HttpContext.RequestServices
                 .GetRequiredService<ILogger<Program>>();
             logger.LogWarning(context.Exception, "JWT authentication failed");
@@ -52,7 +67,12 @@ builder.Services.AddAuthentication(options =>
         },
         OnChallenge = context =>
         {
-            
+            Console.WriteLine("===== JWT CHALLENGE =====");
+            Console.WriteLine($"Has Authorization header: {context.Request.Headers.ContainsKey("Authorization")}");
+            Console.WriteLine($"Authorization value: {context.Request.Headers["Authorization"]}");
+            Console.WriteLine($"Error: {context.Error}");
+            Console.WriteLine($"ErrorDescription: {context.ErrorDescription}");
+            Console.WriteLine("=========================");
             context.HandleResponse();
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             context.Response.ContentType = "application/json";
@@ -92,6 +112,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();   
     app.UseSwaggerUI(); 
 }
+
+app.UseCors("AllowReactApp");
 
 app.UseAuthentication();   
 app.UseAuthorization();
