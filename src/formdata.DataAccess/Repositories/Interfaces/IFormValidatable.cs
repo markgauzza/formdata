@@ -1,4 +1,4 @@
-﻿namespace bentley.DataAccess.Repositories.Interfaces
+﻿namespace formdata.DataAccess.Repositories.Interfaces
 {
     public interface IFormValidatable
     {

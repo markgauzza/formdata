@@ -1,7 +1,7 @@
-﻿using bentley.DataAccess.Repositories.Interfaces;
+﻿using formdata.DataAccess.Repositories.Interfaces;
 using FluentValidation;
 
-namespace bentley.Api.Validation
+namespace formdata.Api.Validation
 {
     public class FormDataValidator : AbstractValidator<IFormValidatable>
     {

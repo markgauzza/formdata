@@ -1,7 +1,7 @@
-﻿using bentley.DataAccess.Models;
+﻿using formdata.DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace bentley.DataAccess
+namespace formdata.DataAccess
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {

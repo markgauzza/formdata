@@ -1,6 +1,6 @@
-﻿using bentley.DataAccess.Models;
+﻿using formdata.DataAccess.Models;
 
-namespace bentley.DataAccess.Repositories.Interfaces
+namespace formdata.DataAccess.Repositories.Interfaces
 {
     public interface IFormDataRepository
     {        

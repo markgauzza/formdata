@@ -1,8 +1,8 @@
-﻿using bentley.Api.Security;
+﻿using formdata.Api.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace bentley.Api.Controllers
+namespace formdata.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

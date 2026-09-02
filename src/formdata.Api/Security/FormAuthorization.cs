@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace bentley.Api.Security
+namespace formdata.Api.Security
 {
     public static class FormAuthorization
     {

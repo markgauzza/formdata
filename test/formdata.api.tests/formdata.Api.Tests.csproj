@@ -19,8 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\bentley.Api\bentley.Api.csproj" />
-    <ProjectReference Include="..\..\src\bentley.DataAccess\bentley.DataAccess.csproj" />
+    <ProjectReference Include="..\..\src\bentley.Api\formdata.Api.csproj" />
+    <ProjectReference Include="..\..\src\bentley.DataAccess\formdata.DataAccess.csproj" />
+    <ProjectReference Include="..\..\src\formdata.Api\formdata.Api.csproj" />
+    <ProjectReference Include="..\..\src\formdata.DataAccess\formdata.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

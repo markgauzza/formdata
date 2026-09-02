@@ -1,4 +1,4 @@
-﻿namespace bentley.DataAccess.Models
+﻿namespace formdata.DataAccess.Models
 {
     public class FormDataList
     {

@@ -18,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\bentley.DataAccess\bentley.DataAccess.csproj" />
+    <ProjectReference Include="..\bentley.DataAccess\formdata.DataAccess.csproj" />
+    <ProjectReference Include="..\formdata.DataAccess\formdata.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

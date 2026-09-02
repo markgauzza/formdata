@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace bentley.Api.Extensions
+namespace formdata.Api.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {

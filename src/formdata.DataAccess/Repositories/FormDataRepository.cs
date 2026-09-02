@@ -1,10 +1,10 @@
-﻿using bentley.DataAccess.Models;
-using bentley.DataAccess.Repositories.Interfaces;
+﻿using formdata.DataAccess.Models;
+using formdata.DataAccess.Repositories.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace bentley.DataAccess.Repositories
+namespace formdata.DataAccess.Repositories
 {
     public class FormDataRepository(AppDbContext context) : IFormDataRepository
     {
